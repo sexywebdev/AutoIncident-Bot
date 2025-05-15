@@ -2,13 +2,13 @@
 
 Install Required Python Packages:
 
-bash
+
 ```
 pip install requests python-dotenv boto3
 ```
 Directory Structure Example:
 
-bash
+
 ```
 incident_tool/
 │
@@ -22,7 +22,7 @@ incident_tool/
 
 Store secrets here securely (don’t commit this to version control):
 
-env
+
 ```
 SERVICENOW_INSTANCE=https://yourinstance.service-now.com
 SERVICENOW_USERNAME=your_username
@@ -30,14 +30,30 @@ SERVICENOW_PASSWORD=your_password
 SERVICENOW_TABLE=incident
 ```
 #Step 3: incident_reporter.py – Main Script
-python
-Copy code
+
+[Code](https://github.com/sexywebdev/AutoIncident-Bot/blob/main/incident_reporter.py)
 
 
-## A Telegram bot that helps users learn new things. The bot can get Wikipedia summaries, search for Wikipedia articles, and get the definition of a word. The bot is easy to use and can be customized to meet the specific needs of any user. It can be used by individuals, businesses, and organizations to learn new things.
+#Step 4: Setup Cron Job on Linux
+Edit Crontab:
+```
+crontab -e
+```
 
-### The bot is powered by the Wikipedia API and the Telegram Bot API. The user can select the topic that they want to learn about by sending the bot the topic name. The bot will then get the Wikipedia summary for the topic and send it to the user.
+Add this to run every 15 minutes:
 
-### The bot can also be used to search for Wikipedia articles. The user can send the bot the search term. The bot will then search for articles that match the search term and send them to the user.
+```
+*/15 * * * * /usr/bin/python3 /path/to/incident_tool/incident_reporter.py
+```
 
-### The bot can also be used to get the definition of a word. The user can send the bot the word. The bot will then get the definition of the word and send it to the user.
+You can redirect errors to a file too:
+
+```
+*/15 * * * * /usr/bin/python3 /path/to/incident_tool/incident_reporter.py >> /path/to/incident_tool/cron.log 2>&1
+```
+#Step 5: Sample sop.md Documentation
+[sop.md](https://github.com/sexywebdev/AutoIncident-Bot/blob/main/sop.md)
+
+
+
+
